@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>星流 Nova · 让创意自由流动</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+:root{
+  --bg:#08080c;
+  --line:rgba(255,255,255,.09);
+  --text:#f4f4f8;
+  --muted:#8f8fa6;
+  --p1:#7c5cff;
+  --p2:#22d3ee;
+  --ease:cubic-bezier(.22,.72,.28,1);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+svg{display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+::selection{background:rgba(124,92,255,.4)}
+.wrap{width:min(1140px,100% - 44px);margin-inline:auto}
+section[id]{scroll-margin-top:90px}
+
+/* ---------- 背景 ---------- */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg::after{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.032) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.032) 1px,transparent 1px);
+  background-size:72px 72px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 55% at 50% 0%,#000,transparent 72%);
+  mask-image:radial-gradient(ellipse 90% 55% at 50% 0%,#000,transparent 72%);
+}
+.blob{position:absolute;border-radius:50%;filter:blur(110px);will-change:translate;transition:translate .6s var(--ease)}
+.b1{width:640px;height:640px;background:#6d4aff;opacity:.42;top:-280px;left:50%;transform:translateX(-50%)}
+.b2{width:460px;height:460px;background:#0ea5b7;opacity:.24;top:140px;right:-180px}
+.b3{width:520px;height:520px;background:#a855f7;opacity:.18;bottom:-220px;left:-200px}
+
+/* ---------- 导航 ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid transparent;transition:background .3s,border-color .3s,backdrop-filter .3s}
+.nav.scrolled{background:rgba(8,8,12,.72);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom-color:var(--line)}
+.nav-inner{display:flex;align-items:center;gap:24px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:650;font-size:16px;letter-spacing:-.01em}
+.logo-mark{width:22px;height:22px;border-radius:8px;background:conic-gradient(from 200deg,#7c5cff,#22d3ee,#a855f7,#7c5cff);box-shadow:0 0 18px rgba(124,92,255,.6)}
+.nav-links{display:flex;gap:30px;margin-left:auto;font-size:14.5px}
+.nav-links a{color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:#fff}
+
+/* ---------- 按钮 ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:550;font-size:14.5px;padding:10px 20px;border:1px solid transparent;cursor:pointer;white-space:nowrap;transition:transform .25s var(--ease),background .25s,box-shadow .25s,border-color .25s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(100deg,#8b6dff,#6d4aff 45%,#1fb6d4);color:#fff;box-shadow:0 8px 30px -8px rgba(124,92,255,.85)}
+.btn-primary:hover{box-shadow:0 14px 44px -10px rgba(124,92,255,1);transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line);background:rgba(255,255,255,.03);color:var(--text)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2)}
+.btn-sm{padding:8px 16px;font-size:13.5px}
+.btn-lg{padding:14px 28px;font-size:15.5px}
+.btn.full{width:100%}
+
+/* ---------- Hero ---------- */
+.hero{padding:clamp(130px,17vw,190px) 0 clamp(50px,8vw,80px);text-align:center;position:relative}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#c9c2ff;padding:7px 15px;border-radius:999px;border:1px solid rgba(124,92,255,.35);background:rgba(124,92,255,.1);margin-bottom:28px}
+h1{font-size:clamp(2.5rem,7.2vw,4.9rem);line-height:1.05;letter-spacing:-.04em;font-weight:700}
+.grad{background:linear-gradient(100deg,#c4b5fd,#7c5cff 42%,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:clamp(15px,1.7vw,17.5px);max-width:620px;margin:24px auto 0}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:38px}
+.hint{font-size:13px;color:#63637a;margin-top:16px}
+
+/* ---------- 模拟界面 ---------- */
+.mock{margin-top:72px;border-radius:18px;padding:1px;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.02));box-shadow:0 50px 120px -40px rgba(124,92,255,.6);text-align:left}
+.mock-inner{background:#0b0b12;border-radius:17px;overflow:hidden}
+.mock-top{display:flex;gap:7px;padding:14px 16px;border-bottom:1px solid var(--line);align-items:center}
+.mock-top i{width:10px;height:10px;border-radius:50%}
+.mock-top i:nth-child(1){background:#ff5f57}
+.mock-top i:nth-child(2){background:#febc2e}
+.mock-top i:nth-child(3){background:#28c840}
+.mock-canvas{display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:150px 108px;gap:12px;padding:16px}
+.mk{border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.055)}
+.mk-a{grid-row:span 2;background:linear-gradient(155deg,rgba(124,92,255,.28),rgba(34,211,238,.08));display:flex;align-items:flex-end;padding:18px}
+.bars{display:flex;gap:10px;align-items:flex-end;width:100%;height:100%}
+.bars i{flex:1;height:var(--h);border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,#a78bfa,#6d4aff);opacity:.85;transition:height .8s var(--ease)}
+.bars i:nth-child(even){background:linear-gradient(180deg,#67e8f9,#0e7490);opacity:.7}
+
+/* ---------- 数据 ---------- */
+.stats{padding:56px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center}
+.stat b{display:block;font-size:clamp(1.6rem,3vw,2.15rem);letter-spacing:-.03em;font-weight:680;background:linear-gradient(180deg,#fff,#9d9db8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:13.5px;color:var(--muted)}
+
+/* ---------- 通用区块 ---------- */
+.section{padding:clamp(70px,10vw,118px) 0}
+.head{text-align:center;max-width:640px;margin:0 auto clamp(40px,6vw,62px)}
+.eyebrow{display:inline-block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#9d8bff;margin-bottom:14px;font-weight:600}
+h2{font-size:clamp(1.8rem,4vw,2.7rem);letter-spacing:-.03em;line-height:1.18;font-weight:680}
+.head p{color:var(--muted);margin-top:16px;font-size:16px}
+
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{position:relative;padding:28px 26px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));transition:transform .35s var(--ease),border-color .35s,background .35s}
+.card:hover{transform:translateY(-4px);border-color:rgba(124,92,255,.42);background:linear-gradient(180deg,rgba(124,92,255,.1),rgba(255,255,255,.02))}
+.ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(140deg,rgba(124,92,255,.3),rgba(34,211,238,.16));border:1px solid rgba(255,255,255,.1);color:#c4b5fd;margin-bottom:18px}
+.ic svg{width:20px;height:20px}
+.card h3{font-size:17px;font-weight:620;letter-spacing:-.01em;margin-bottom:8px}
+.card p{font-size:14.5px;color:var(--muted);line-height:1.7}
+
+/* ---------- 定价 ---------- */
+.pricing{align-items:start}
+.price{padding:30px 26px}
+.price.featured{border-color:rgba(124,92,255,.5);background:linear-gradient(180deg,rgba(124,92,255,.14),rgba(255,255,255,.02));box-shadow:0 30px 80px -40px rgba(124,92,255,.9)}
+.badge{position:absolute;top:-12px;right:22px;font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:5px 12px;border-radius:999px;background:linear-gradient(100deg,#8b6dff,#22d3ee);color:#fff}
+.price h3{font-size:15px;font-weight:600;color:#d8d8ea}
+.price .desc{font-size:13.5px;color:var(--muted);margin-top:4px}
+.amount{display:flex;align-items:baseline;gap:6px;margin:22px 0}
+.amount b{font-size:2.4rem;letter-spacing:-.04em;font-weight:680}
+.amount span{font-size:14px;color:var(--muted)}
+.price ul{display:grid;gap:11px;margin-bottom:26px}
+.price li{font-size:14px;color:#b9b9cc;display:flex;gap:9px;align-items:flex-start}
+.price li::before{content:"✓";color:#7c5cff;font-weight:700;flex:none}
+
+/* ---------- CTA ---------- */
+.cta-box{position:relative;text-align:center;padding:clamp(48px,7vw,82px) 26px;border-radius:24px;overflow:hidden;border:1px solid rgba(124,92,255,.3);background:radial-gradient(ellipse at 50% 0%,rgba(124,92,255,.3),transparent 68%),rgba(255,255,255,.02)}
+.cta-box p{color:var(--muted);margin-top:14px;font-size:16px}
+.cta-box .cta-row{margin-top:32px}
+
+/* ---------- 页脚 ---------- */
+.footer{border-top:1px solid var(--line);padding:36px 0;margin-top:40px}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+
+/* ---------- 动效 ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease) var(--d,0s),transform .8s var(--ease) var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:900px){
+  .grid-3{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:30px 18px}
+  .mock-canvas{grid-template-columns:1fr;grid-template-rows:130px 80px 80px}
+  .mk-a{grid-row:auto}
+}
+@media (max-width:720px){
+  .nav-links{display:none}
+  .nav-inner{justify-content:space-between}
+  .nav-inner .btn{margin-left:auto}
+  .cta-row{flex-direction:column;align-items:stretch}
+  .cta-row .btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+  <span class="blob b3"></span>
+</div>
+
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top"><span class="logo-mark"></span>星流 Nova</a>
+    <nav class="nav-links">
+      <a href="#features">功能</a>
+      <a href="#pricing">定价</a>
+      <a href="#cta">联系我们</a>
+    </nav>
+    <a href="#cta" class="btn btn-sm btn-primary">开始使用</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="pill reveal">✦ 2.0 版本已发布 · 全新协作引擎</div>
+      <h1 class="reveal" style="--d:.06s">让创意<br><span class="grad">自由流动</span></h1>
+      <p class="lead reveal" style="--d:.12s">星流 Nova 把设计、协作与自动化放进同一块画布。从灵感到上线，团队所需的一切，都在这里。</p>
+      <div class="cta-row reveal" style="--d:.18s">
+        <a href="#" class="btn btn-primary btn-lg">免费开始使用</a>
+        <a href="#" class="btn btn-ghost btn-lg">▶ 观看 2 分钟演示</a>
+      </div>
+      <p class="hint reveal" style="--d:.24s">无需信用卡 · 永久免费方案</p>
+
+      <div class="mock reveal" style="--d:.3s">
+        <div class="mock-inner">
+          <div class="mock-top"><i></i><i></i><i></i></div>
+          <div class="mock-canvas">
+            <div class="mk mk-a">
+              <div class="bars">
+                <i style="--h:38%"></i><i style="--h:62%"></i><i style="--h:46%"></i>
+                <i style="--h:82%"></i><i style="--h:55%"></i><i style="--h:94%"></i>
+                <i style="--h:70%"></i>
+              </div>
+            </div>
+            <div class="mk mk-b"></div>
+            <div class="mk mk-c"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 数据 -->
+  <section class="stats">
+    <div class="wrap stats-grid">
+      <div class="stat reveal"><b>12,000+</b><span>活跃团队</span></div>
+      <div class="stat reveal" style="--d:.08s"><b>4.2 亿</b><span>已处理任务</span></div>
+      <div class="stat reveal" style="--d:.16s"><b>99.99%</b><span>服务可用性</span></div>
+      <div class="stat reveal" style="--d:.24s"><b>2.4×</b><span>平均效率提升</span></div>
+    </div>
+  </section>
+
+  <!-- 功能 -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">功能</span>
+        <h2>为速度而生的一切</h2>
+        <p>把散落在各处的工具收进一个地方，让团队只专注于真正重要的事。</p>
+      </div>
+
+      <div class="grid-3">
+        <article class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+          <h3>实时协作</h3>
+          <p>多人同时编辑，光标与评论实时同步，再也不用合并版本。</p>
+        </article>
+
+        <article class="card reveal" style="--d:.06s">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></div>
+          <h3>极速性能</h3>
+          <p>毫秒级响应，十万人同时在线的画布依旧顺滑如初。</p>
+        </article>
+
+        <article class="card reveal" style="--d:.12s">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 4v5h-5"/></svg></div>
+          <h3>流程自动化</h3>
+          <p>用可视化规则把重复劳动交给机器，一键串联所有环节。</p>
+        </article>
+
+        <article class="card reveal" style="--d:.18s">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V12"/><path d="M12 20V6"/><path d="M18 20v-5"/><path d="M3 21h18"/></svg></div>
+          <h3>数据洞察</h3>
+          <p>实时的项目仪表盘，让进度、瓶颈和风险一目了然。</p>
+        </article>
+
+        <article class="card reveal" style="--d:.24s">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>企业级安全</h3>
+          <p>端到端加密、细粒度权限与完整审计日志，安心托管数据。</p>
+        </article>
+
+        <article class="card reveal" style="--d:.3s">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></div>
+          <h3>无缝集成</h3>
+          <p>内置 80+ 主流工具连接器，也支持用 API 自由扩展。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 定价 -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">定价</span>
+        <h2>简单透明的价格</h2>
+        <p>从个人到大型团队，随时升级或取消，没有隐藏费用。</p>
+      </div>
+
+      <div class="grid-3 pricing">
+        <article class="card price reveal">
+          <h3>免费</h3>
+          <p class="desc">适合个人探索</p>
+          <div class="amount"><b>¥0</b><span>/ 月</span></div>
+          <ul>
+            <li>3 个活跃项目</li>
+            <li>2 名协作者</li>
+            <li>1 GB 存储空间</li>
+            <li>社区支持</li>
+          </ul>
+          <a href="#" class="btn btn-ghost full">开始使用</a>
+        </article>
+
+        <article class="card price featured reveal" style="--d:.08s">
+          <span class="badge">最受欢迎</span>
+          <h3>专业版</h3>
+          <p class="desc">适合成长中的团队</p>
+          <div class="amount"><b>¥68</b><span>/ 人 / 月</span></div>
+          <ul>
+            <li>无限项目与协作者</li>
+            <li>100 GB 存储空间</li>
+            <li>流程自动化引擎</li>
+            <li>高级数据看板</li>
+            <li>优先邮件支持</li>
+          </ul>
+          <a href="#" class="btn btn-primary full">免费试用 14 天</a>
+        </article>
+
+        <article class="card price reveal" style="--d:.16s">
+          <h3>企业版</h3>
+          <p class="desc">适合规模化组织</p>
+          <div class="amount"><b>定制</b></div>
+          <ul>
+            <li>单点登录 SSO / SCIM</li>
+            <li>无限存储空间</li>
+            <li>专属客户成功经理</li>
+            <li>99.99% SLA 保障</li>
+            <li>私有化部署选项</li>
+          </ul>
+          <a href="#" class="btn btn-ghost full">联系销售</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" id="cta">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <h2>准备好开始了吗？</h2>
+        <p>加入 12,000+ 团队，把想法更快地变成现实。</p>
+        <div class="cta-row">
+          <a href="#" class="btn btn-primary btn-lg">免费开始使用</a>
+          <a href="#" class="btn btn-ghost btn-lg">预约演示</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <a class="logo" href="#top"><span class="logo-mark"></span>星流 Nova</a>
+    <p>© 2026 星流 Nova · 保留所有权利</p>
+  </div>
+</footer>
+
+<script>
+// 导航栏滚动状态
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+onScroll();
+addEventListener('scroll', onScroll, { passive: true });
+
+// 滚动入场动画
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  }
+}, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// 光斑随鼠标轻微视差
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(pointer:fine)').matches) {
+  const blobs = document.querySelectorAll('.blob');
+  let raf = null, tx = 0, ty = 0;
+  addEventListener('pointermove', (e) => {
+    tx = e.clientX / innerWidth - 0.5;
+    ty = e.clientY / innerHeight - 0.5;
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      blobs.forEach((b, i) => {
+        const k = (i + 1) * 16;
+        b.style.translate = `${tx * k}px ${ty * k}px`;
+      });
+      raf = null;
+    });
+  }, { passive: true });
+}
+</script>
+</body>
+</html>
