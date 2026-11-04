@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>校园贝斯社 2026 年招新</title>
+<style>
+/* ============ 设计变量 ============ */
+:root{
+    --bg:#0c0e13;
+    --panel:rgba(255,255,255,.04);
+    --panel-2:rgba(255,255,255,.025);
+    --line:rgba(255,255,255,.09);
+    --line-soft:rgba(255,255,255,.06);
+    --text:#e9ecf1;
+    --text-soft:#c6cdd9;
+    --text-dim:#98a2b3;
+    --gold:#f2b64c;
+    --gold-2:#de9a2c;
+    --gold-soft:#f7dfae;
+    --radius:18px;
+    --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    --font-serif:"Noto Serif SC","Songti SC","STSong","SimSun",Georgia,"Times New Roman",serif;
+}
+
+/* ============ 基础重置 ============ */
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:var(--font-sans);
+    font-size:16px;
+    line-height:1.9;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    background-color:var(--bg);
+    background-image:
+        linear-gradient(rgba(255,255,255,.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.016) 1px, transparent 1px),
+        radial-gradient(1100px 620px at 12% -12%, rgba(242,182,76,.10), transparent 62%),
+        radial-gradient(900px 520px at 92% 2%, rgba(108,140,255,.10), transparent 60%);
+    background-size:72px 72px, 72px 72px, auto, auto;
+    background-attachment:fixed;
+}
+
+p{ margin:0 0 16px; color:var(--text-soft); }
+p:last-child{ margin-bottom:0; }
+
+/* 锚点滚动时留出导航栏高度 */
+section[id], header[id]{ scroll-margin-top:84px; }
+
+/* ============ 顶部导航 ============ */
+.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(12,14,19,.75);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+}
+.nav-inner{
+    max-width:1080px; margin:0 auto;
+    padding:12px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap;
+}
+.brand{
+    font-family:var(--font-serif);
+    font-size:17px; font-weight:700;
+    letter-spacing:.1em;
+    color:var(--gold-soft);
+    text-decoration:none;
+}
+.nav-links{ display:flex; flex-wrap:wrap; gap:4px; }
+.nav-links a{
+    color:var(--text-dim);
+    text-decoration:none;
+    font-size:14.5px;
+    padding:7px 15px;
+    border-radius:999px;
+    transition:all .25s ease;
+}
+.nav-links a:hover{
+    color:#12141a;
+    background:linear-gradient(135deg,var(--gold),var(--gold-2));
+    box-shadow:0 6px 18px -8px rgba(242,182,76,.9);
+}
+
+/* ============ 头图 ============ */
+.hero{
+    position:relative;
+    max-width:1080px; margin:0 auto;
+    padding:92px 24px 66px;
+    text-align:center;
+}
+.eyebrow{
+    margin:0 0 20px;
+    font-size:12px; letter-spacing:.34em;
+    color:var(--gold); opacity:.9;
+}
+.hero h1{
+    margin:0 0 18px;
+    font-family:var(--font-serif);
+    font-size:clamp(30px,5.2vw,54px);
+    font-weight:700;
+    letter-spacing:.04em;
+    line-height:1.35;
+    background:linear-gradient(180deg,#ffffff 0%,#f6d79a 58%,#d59b34 100%);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:transparent;
+}
+.hero-sub{
+    margin:0 0 36px;
+    font-size:clamp(14px,2vw,17px);
+    letter-spacing:.2em;
+    color:var(--text-dim);
+}
+.audio-card{
+    display:inline-flex; align-items:center; gap:14px;
+    padding:10px 20px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:var(--panel);
+    box-shadow:0 20px 50px -30px rgba(0,0,0,.9);
+}
+.audio-card span{
+    font-size:12.5px; letter-spacing:.16em;
+    color:var(--text-dim); white-space:nowrap;
+}
+.audio-card audio{ height:34px; max-width:260px; }
+
+/* ============ 分隔线 ============ */
+.rule{
+    max-width:1032px; margin:0 auto;
+    height:1px; border:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);
+}
+
+/* ============ 内容区 ============ */
+main{ position:relative; z-index:1; }
+.section{
+    max-width:1080px; margin:0 auto;
+    padding:58px 24px;
+}
+.section h2{
+    position:relative;
+    margin:0 0 26px;
+    padding-left:20px;
+    font-family:var(--font-serif);
+    font-size:clamp(21px,3vw,28px);
+    font-weight:700;
+    letter-spacing:.05em;
+    color:#f4f6fa;
+}
+.section h2::before{
+    content:"";
+    position:absolute; left:0; top:50%;
+    transform:translateY(-50%);
+    width:5px; height:1.05em;
+    border-radius:4px;
+    background:linear-gradient(180deg,var(--gold),var(--gold-2));
+    box-shadow:0 0 18px rgba(242,182,76,.6);
+}
+.section h3{
+    margin:30px 0 10px;
+    font-size:17.5px;
+    font-weight:600;
+    letter-spacing:.04em;
+    color:var(--gold-soft);
+}
+.section h3:first-child{ margin-top:0; }
+
+/* ============ 卡片 ============ */
+.card{
+    padding:30px 34px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.018));
+    box-shadow:0 30px 70px -50px rgba(0,0,0,1);
+}
+
+/* ============ 表格 ============ */
+.table-wrap{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow-x:auto;
+    overflow-y:hidden;
+    background:var(--panel-2);
+}
+.table-wrap table{
+    width:100%;
+    min-width:640px;
+    border-collapse:collapse;
+    font-size:15px;
+}
+/* 表格总标题行 */
+.table-wrap tr:first-child th{
+    padding:17px 18px;
+    text-align:center;
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:.14em;
+    color:#fbe7bd;
+    background:linear-gradient(135deg,rgba(242,182,76,.20),rgba(242,182,76,.05));
+    border-bottom:1px solid rgba(242,182,76,.30);
+}
+/* 表头行 */
+.table-wrap tr:nth-child(2) th{
+    padding:13px 18px;
+    text-align:left;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.08em;
+    color:var(--text-dim);
+    background:rgba(255,255,255,.04);
+    border-bottom:1px solid var(--line);
+}
+.table-wrap td{
+    padding:14px 18px;
+    color:var(--text-soft);
+    border-bottom:1px solid var(--line-soft);
+}
+.table-wrap tr:last-child td{ border-bottom:none; }
+.table-wrap tr:hover td{ background:rgba(242,182,76,.055); }
+
+/* ============ 图片 / 视频 ============ */
+.showcase{
+    display:inline-block;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    line-height:0;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,1);
+    transition:transform .4s ease, box-shadow .4s ease, border-color .4s ease;
+}
+.showcase:hover{
+    transform:translateY(-5px);
+    border-color:rgba(242,182,76,.55);
+    box-shadow:0 36px 80px -34px rgba(242,182,76,.35);
+}
+.showcase img{
+    display:block;
+    width:100%;
+    max-width:420px;
+    height:auto;
+}
+.video-box{
+    display:inline-block;
+    margin-top:18px;
+    padding:10px;
+    border:1px solid var(--line);
+    border-radius:calc(var(--radius) + 8px);
+    background:var(--panel);
+    line-height:0;
+}
+.video-box video{
+    display:block;
+    width:100%;
+    max-width:520px;
+    border-radius:var(--radius);
+    background:#000;
+}
+
+/* ============ 报名表单 ============ */
+.form-card{
+    padding:34px 36px;
+    border:1px solid var(--line);
+    border-radius:calc(var(--radius) + 4px);
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.018));
+    box-shadow:0 30px 70px -50px rgba(0,0,0,1);
+}
+.form-grid{
+    display:grid;
+    grid-template-columns:150px minmax(0,1fr);
+    gap:18px 26px;
+    align-items:start;
+}
+.field{ display:contents; }
+.field-label{
+    padding-top:11px;
+    text-align:right;
+    font-size:14.5px;
+    color:var(--text-dim);
+    letter-spacing:.04em;
+}
+.control{ min-width:0; }
+
+/* 输入控件统一样式 */
+input[type="text"], select, textarea{
+    width:100%;
+    padding:11px 15px;
+    font-family:inherit;
+    font-size:15px;
+    line-height:1.6;
+    color:var(--text);
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:11px;
+    outline:none;
+    transition:border-color .2s, box-shadow .2s, background .2s;
+}
+textarea{ resize:vertical; min-height:130px; }
+::placeholder{ color:rgba(152,162,179,.55); }
+input[type="text"]:focus, select:focus, textarea:focus{
+    border-color:rgba(242,182,76,.65);
+    background:rgba(255,255,255,.075);
+    box-shadow:0 0 0 3px rgba(242,182,76,.14);
+}
+
+/* 下拉框 */
+select{
+    -webkit-appearance:none; appearance:none;
+    padding-right:40px;
+    background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2398a2b3' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 15px center;
+    cursor:pointer;
+}
+select option{ background:#15181f; color:var(--text); }
+
+/* 单选 / 复选 —— 胶囊标签 */
+.opt-group{ display:flex; flex-wrap:wrap; gap:10px; }
+.opt{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:8px 16px;
+    font-size:14.5px;
+    color:var(--text-soft);
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:999px;
+    cursor:pointer;
+    transition:all .22s ease;
+    user-select:none;
+}
+.opt:hover{
+    color:var(--gold-soft);
+    border-color:rgba(242,182,76,.45);
+    background:rgba(242,182,76,.08);
+}
+.opt:has(input:checked){
+    color:var(--gold-soft);
+    border-color:rgba(242,182,76,.62);
+    background:rgba(242,182,76,.13);
+}
+.opt input{
+    width:15px; height:15px; margin:0;
+    accent-color:var(--gold);
+    cursor:pointer;
+}
+
+/* 日期 / 联系方式 */
+.date-control{
+    display:flex; align-items:center; gap:10px;
+    font-size:14px; color:var(--text-dim);
+}
+.date-control input{ width:82px; text-align:center; }
+.contact-row{
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:10px;
+}
+.contact-row:last-child{ margin-bottom:0; }
+.contact-row input{ flex:1; min-width:0; }
+.mini-label{
+    flex:none; width:44px;
+    font-size:14px; color:var(--text-dim);
+}
+
+/* 按钮 */
+.btn-row{ display:flex; flex-wrap:wrap; gap:14px; }
+.btn{
+    font-family:inherit;
+    font-size:15px; font-weight:600;
+    letter-spacing:.08em;
+    padding:12px 36px;
+    border-radius:12px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:all .25s ease;
+}
+.btn-primary{
+    color:#14161c;
+    background:linear-gradient(135deg,#f8cb72,var(--gold-2));
+    box-shadow:0 16px 34px -16px rgba(242,182,76,.95);
+}
+.btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 22px 40px -14px rgba(242,182,76,.9);
+}
+.btn-ghost{
+    color:var(--text-soft);
+    background:transparent;
+    border-color:rgba(255,255,255,.18);
+}
+.btn-ghost:hover{
+    color:#fff;
+    background:rgba(255,255,255,.06);
+    border-color:rgba(255,255,255,.4);
+}
+
+/* ============ 返回顶部 ============ */
+.to-top{ margin-top:24px; text-align:right; }
+.to-top a{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:7px 18px;
+    font-size:13.5px;
+    color:var(--text-dim);
+    text-decoration:none;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:999px;
+    transition:all .25s ease;
+}
+.to-top a:hover{
+    color:var(--gold-soft);
+    border-color:rgba(242,182,76,.5);
+    background:rgba(242,182,76,.08);
+}
+
+/* ============ 页脚 ============ */
+.site-footer{
+    margin-top:40px;
+    padding:50px 24px 64px;
+    text-align:center;
+    border-top:1px solid var(--line);
+    background:linear-gradient(180deg,transparent,rgba(242,182,76,.05));
+}
+.foot-title{
+    margin:0 0 10px;
+    font-family:var(--font-serif);
+    font-size:18px;
+    letter-spacing:.16em;
+    color:var(--gold-soft);
+}
+.foot-note{
+    margin:0;
+    font-size:13px;
+    letter-spacing:.22em;
+    color:rgba(152,162,179,.7);
+}
+
+/* ============ 响应式 ============ */
+@media (max-width:820px){
+    .nav-inner{ padding:10px 16px; justify-content:center; }
+    .brand{ width:100%; text-align:center; }
+    .hero{ padding:60px 18px 46px; }
+    .section{ padding:44px 18px; }
+    .card{ padding:24px 20px; }
+    .form-card{ padding:24px 20px; }
+    .form-grid{ grid-template-columns:1fr; gap:18px; }
+    .field-label{
+        text-align:left;
+        padding-top:0;
+        font-size:12.5px;
+        letter-spacing:.16em;
+        color:var(--gold);
+    }
+    .to-top{ text-align:center; }
+    .audio-card{ padding:10px 14px; gap:10px; }
+    .audio-card audio{ max-width:200px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<nav class="site-nav">
+    <div class="nav-inner">
+        <a class="brand" href="#top">♪ 校园贝斯社</a>
+        <div class="nav-links">
+            <a href="#intro">社团简介</a>
+            <a href="#activities">活动安排</a>
+            <a href="#show">风采展示</a>
+            <a href="#stories">社员故事</a>
+            <a href="#signup">在线报名</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== 头图 / 背景音乐 ===== -->
+<header class="hero" id="top">
+    <p class="eyebrow">CAMPUS BASS CLUB · 2026</p>
+    <h1>校园贝斯社 2026 年招新</h1>
+    <p class="hero-sub">低音不低调 · 律动由你掌控</p>
+
+    <!-- 背景音乐：自动播放 + 循环 + 可手动控制 -->
+    <div class="audio-card">
+        <span>背景音乐</span>
+        <audio src="base.mp3" autoplay controls loop>
+            您的浏览器不支持 audio 标签。
+        </audio>
+    </div>
+</header>
+
+<hr class="rule">
+
+<main>
+
+<!-- ===== 一、社团简介 ===== -->
+<section class="section" id="intro">
+    <h2>一、贝斯社简介</h2>
+
+    <div class="card">
+        <p>
+            校园贝斯社成立于 2015 年，是校内专注于低音器乐与乐队文化的特色学生社团。
+            在大众认知里，贝斯常常是乐队中容易被忽视的乐器，它没有主唱耀眼的舞台光环，也少有吉他华丽的独奏片段，但它却是乐队不可或缺的律动骨架。
+            社团以贝斯为核心载体，面向全校音乐爱好者，打造集学习训练、技术交流、合奏排练、舞台实践于一体的平台，让更多同学了解贝斯，感受低音音乐独有的魅力。
+        </p>
+        <p>
+            无论你是零基础的新手，还是已经能熟练弹唱的老玩家，只要对贝斯和音乐有兴趣，都欢迎加入贝斯社。
+            课余大家会一起赏析乐队作品，交流扒谱心得，在练习室反复排练曲目，排练之余闲聊听歌，在忙碌的课业之外找到放松自我的方式！
+            每周设置固定集体练习时间，划分零基础萌新小组和进阶小组分开训练。针对新社员开设基础公开课夯实基本功；有基础的同学可以自由组队，开展乐队排练。
+        </p>
+        <p>
+            社团平时的活动地点主要在学生活动中心的音乐教室，每周会安排固定的练习时间，也会根据需要加练。
+            除日常排练之外，社团还会举办低音乐理分享、贝斯技巧沙龙、即兴合奏等丰富多彩的小型活动，鼓励社员参与活动策划，贡献自己的创意！
+        </p>
+    </div>
+
+    <div class="to-top"><a href="#top">↑ 返回顶部</a></div>
+</section>
+
+<hr class="rule">
+
+<!-- ===== 二、活动安排 ===== -->
+<section class="section" id="activities">
+    <h2>二、本学期主要活动安排</h2>
+
+    <p>
+        为了让大家更好地了解贝斯社的日常，本学期计划安排如下几项主要活动。
+        具体时间可能会根据学校统一安排略作调整，详情请关注社团通知。
+    </p>
+
+    <div class="table-wrap">
+        <table border="1" cellspacing="0" cellpadding="5">
+            <tr>
+                <!-- 合并 4 列，做表格总标题 -->
+                <th colspan="4">贝斯社 2026 年春季学期活动安排表</th>
+            </tr>
+            <tr>
+                <th>活动名称</th>
+                <th>活动时间</th>
+                <th>活动地点</th>
+                <th>负责人</th>
+            </tr>
+            <tr>
+                <td>新成员见面会</td>
+                <td>3 月第 2 周 周五晚</td>
+                <!-- 使用 rowspan 合并两行地点 -->
+                <td rowspan="2">学生活动中心 音乐教室 201</td>
+                <td>张强</td>
+            </tr>
+            <tr>
+                <td>贝斯基础教学公开课</td>
+                <td>3 月第 3 周 周六下午</td>
+                <!-- 地点单元格已在上一行合并 -->
+                <td>李娜</td>
+            </tr>
+            <tr>
+                <td>校园草地弹唱会</td>
+                <td>4 月第 2 周 周日</td>
+                <td>操场东侧草坪</td>
+                <td>王浩</td>
+            </tr>
+            <tr>
+                <td>期末专场音乐会</td>
+                <td>6 月第 1 周 周六晚</td>
+                <td>大学生活动中心 大礼堂</td>
+                <td>刘芳</td>
+            </tr>
+        </table>
+    </div>
+
+    <p style="margin-top:18px;">
+        上表仅列出了部分代表性活动，日常还会有小型即兴合奏、经验分享等活动，欢迎有想法、有创意的同学参与策划。
+    </p>
+
+    <div class="to-top"><a href="#top">↑ 返回顶部</a></div>
+</section>
+
+<hr class="rule">
+
+<!-- ===== 三、风采展示 ===== -->
+<section class="section" id="show">
+    <h2>三、贝斯社风采展示</h2>
+
+    <p>下面是一张往届校园音乐会的照片示意。点击图片，可以查看更详细的活动介绍页面。</p>
+
+    <!-- 图片超链接（点击图片跳转到另一个页面） -->
+    <a class="showcase" href="club_intro.html" title="点击查看社团详细介绍">
+        <img src="贝斯社.jpg" alt="贝斯社往届音乐会排练照片">
+    </a>
+
+    <p style="margin-top:18px;">
+        图中为上学期“夏日之声”校园音乐会上，贝斯社成员的集体演出排练场景。
+        平时的训练与排练，都会在正式演出中得到充分的展示机会。
+    </p>
+
+    <h3>宣传视频示例</h3>
+    <div class="video-box">
+        <video src="宣传视频.mp4" controls loop playsinline>
+            您的浏览器不支持 video 标签。
+        </video>
+    </div>
+
+    <div class="to-top"><a href="#top">↑ 返回顶部</a></div>
+</section>
+
+<hr class="rule">
+
+<!-- ===== 四、社员故事 ===== -->
+<section class="section" id="stories">
+    <h2>四、社员故事（节选）</h2>
+
+    <div class="card">
+        <h3>1. 从零起步，成为乐队的贝斯担当</h3>
+        <p>
+            大一刚入学的小周，在进入贝斯社之前完全没有任何乐器基础。在此之前，他分不清吉他和贝斯的区别，只是听歌的时候，被歌曲里低沉有力的低音旋律深深吸引，抱着试一试的心态报名了贝斯社。
+            刚入社的时候，他连正确的持琴姿势都掌握不好，手指按弦力度不对，弹出来的音符总是浑浊模糊。他也没有属于自己的贝斯，每次训练都借用社团的公用乐器练习。
+        </p>
+        <p>
+            在社团学长学姐的耐心指导下，他从爬格子、基础音阶、简单根音一步步练起。每天晚自习结束，他都会抽一小时来到练习室，跟着节拍器反复打磨节奏。
+            练习贝斯十分考验手指耐力，长时间练习过后指尖会发酸发胀，但他没有轻易放弃。刚开始排练合奏的时候，他经常跟不上鼓手的节奏，总是出现错位、抢拍的问题。
+            为此他反复扒听乐队曲目，标记每一段贝斯的律动，一遍一遍慢速练习。一个学期过去，他的演奏水平得到很大提升，顺利加入社团组建的校园乐队。
+            在校园文化节的舞台上，他作为贝斯手完成了人生第一次公开演出。当厚重的贝斯声响从音响传出，台下响起掌声的时候，他真切体会到坚持练习带来的成就感。
+        </p>
+
+        <h3>2. 音乐治愈内向的自己</h3>
+        <p>
+            小吴性格内向，平时很少在众人面前表达自己，最开始来到社团，集体排练时都习惯站在角落，害怕被别人关注。偶然一次听到放克风格的贝斯演奏，充满动感的律动打动了他，于是决定留下来学习贝斯。
+            最开始当众演奏，只要周围有人围观，他就会紧张慌乱，频频弹错音符。社团的伙伴没有催促施压，而是给予足够的包容，小组小规模排练，鼓励他慢慢适应当众演奏。
+        </p>
+        <p>
+            一次次练习之后，他慢慢克服内心的胆怯，敢于在社员面前完整演奏整首曲目。在社团内部小型汇报演出，他站上舞台完成表演。落幕时热烈的掌声，让他收获了前所未有的自信。
+            他渐渐明白，舞台上不一定非要做万众瞩目的主角，贝斯手守住整首曲子的律动根基，同样闪闪发光。音乐让他打开心扉，慢慢学会与人交流，性格也变得开朗许多。
+        </p>
+
+        <h3>3. 因贝斯遇见一群志同道合的朋友</h3>
+        <p>
+            贝斯属于比较小众的乐器，很多同学在高中很难找到同样热爱贝斯的伙伴。对于大多数社员来说，加入贝斯社收获的不只是弹奏乐器的技能，更珍贵的是一群志同道合的朋友。
+            大家会聚在一起分享喜欢的乐队，交流扒谱、演奏的经验技巧。课余相约练习室排练，为演出一起打磨曲目；排练结束后一起听歌聊天，卸下课业带来的压力。
+            社团没有等级隔阂，技术好的同学乐于帮扶新人，新人也可以大胆提出自己新奇的想法。不少同学在这里找到了可以一起组队的队友，收获珍贵的友谊。
+            大学生活因为贝斯、因为同频的伙伴，变得更加鲜活有趣。如果你也热爱低音音乐，期待与我们一起感受贝斯独有的魅力。
+        </p>
+    </div>
+
+    <div class="to-top"><a href="#top">↑ 返回顶部</a></div>
+</section>
+
+<hr class="rule">
+
+<!-- ===== 五、在线报名 ===== -->
+<section class="section" id="signup">
+    <h2>五、贝斯社在线报名表</h2>
+
+    <p>
+        请认真填写以下信息，确保联系方式准确无误。
+        提交后，社团会通过电话或短信的方式通知面谈或试音时间。
+    </p>
+
+    <form class="form-card" action="#" method="post">
+        <div class="form-grid">
+
+            <!-- 姓名 -->
+            <div class="field">
+                <label class="field-label" for="username">姓名</label>
+                <div class="control">
+                    <input type="text" id="username" name="username" placeholder="请输入你的姓名">
+                </div>
+            </div>
+
+            <!-- 性别 -->
+            <div class="field">
+                <span class="field-label">性别</span>
+                <div class="control opt-group">
+                    <label class="opt"><input type="radio" name="gender" value="男" checked>男</label>
+                    <label class="opt"><input type="radio" name="gender" value="女">女</label>
+                </div>
+            </div>
+
+            <!-- 出生日期 -->
+            <div class="field">
+                <span class="field-label">出生日期</span>
+                <div class="control date-control">
+                    <input type="text" name="year" placeholder="2005"> 年
+                    <input type="text" name="month" placeholder="05"> 月
+                    <input type="text" name="day" placeholder="20"> 日
+                </div>
+            </div>
+
+            <!-- 联系方式 -->
+            <div class="field">
+                <span class="field-label">联系方式</span>
+                <div class="control">
+                    <div class="contact-row">
+                        <span class="mini-label">手机</span>
+                        <input type="text" id="phone" name="phone" placeholder="请输入手机号码">
+                    </div>
+                    <div class="contact-row">
+                        <span class="mini-label">邮箱</span>
+                        <input type="text" id="email" name="email" placeholder="请输入常用邮箱">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 贝斯基础 -->
+            <div class="field">
+                <span class="field-label">贝斯基础</span>
+                <div class="control opt-group">
+                    <label class="opt"><input type="radio" name="base" value="无基础" checked>无基础</label>
+                    <label class="opt"><input type="radio" name="base" value="会几首简单曲目">会几首简单曲目</label>
+                    <label class="opt"><input type="radio" name="base" value="可独立弹唱">可独立弹唱</label>
+                </div>
+            </div>
+
+            <!-- 兴趣方向 -->
+            <div class="field">
+                <span class="field-label">兴趣方向</span>
+                <div class="control opt-group">
+                    <label class="opt"><input type="checkbox" name="hobby" value="弹唱">弹唱</label>
+                    <label class="opt"><input type="checkbox" name="hobby" value="指弹">指弹</label>
+                    <label class="opt"><input type="checkbox" name="hobby" value="乐队">组建乐队</label>
+                    <label class="opt"><input type="checkbox" name="hobby" value="创作">原创歌曲创作</label>
+                    <label class="opt"><input type="checkbox" name="hobby" value="录音">录音与后期</label>
+                </div>
+            </div>
+
+            <!-- 年级 -->
+            <div class="field">
+                <label class="field-label" for="grade">年级</label>
+                <div class="control">
+                    <select id="grade" name="grade">
+                        <option value="大一" selected>大一</option>
+                        <option value="大二">大二</option>
+                        <option value="大三">大三</option>
+                        <option value="大四">大四</option>
+                        <option value="研究生">研究生</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 自我介绍 -->
+            <div class="field">
+                <label class="field-label" for="intro">自我介绍</label>
+                <div class="control">
+                    <textarea id="intro" name="intro" rows="6"
+                              placeholder="请简单介绍自己、以及加入贝斯社的理由……"></textarea>
+                </div>
+            </div>
+
+            <!-- 是否服从安排 -->
+            <div class="field">
+                <span class="field-label">服从安排</span>
+                <div class="control opt-group">
+                    <label class="opt"><input type="radio" name="obey" value="是" checked>是</label>
+                    <label class="opt"><input type="radio" name="obey" value="否">否</label>
+                </div>
+            </div>
+
+            <!-- 提交操作 -->
+            <div class="field">
+                <span class="field-label">提交操作</span>
+                <div class="control btn-row">
+                    <input type="submit" class="btn btn-primary" value="提交报名">
+                    <input type="reset" class="btn btn-ghost" value="重置表单">
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <p style="margin-top:18px;">
+        提交表单后，如需修改信息，可以再次填写并提交最新的一份。
+    </p>
+
+    <div class="to-top"><a href="#top">↑ 返回顶部</a></div>
+</section>
+
+</main>
+
+<!-- ===== 页脚 ===== -->
+<footer class="site-footer">
+    <p class="foot-title">校园贝斯社 · 2026 招新</p>
+    <p class="foot-note">LOW END · HIGH VIBE</p>
+</footer>
+
+</body>
+</html>

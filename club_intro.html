@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>贝斯社活动简介</title>
+<style>
+/* ============ 设计变量（与招新主页保持一致） ============ */
+:root{
+    --bg:#0c0e13;
+    --panel:rgba(255,255,255,.04);
+    --panel-2:rgba(255,255,255,.025);
+    --line:rgba(255,255,255,.09);
+    --line-soft:rgba(255,255,255,.06);
+    --text:#e9ecf1;
+    --text-soft:#c6cdd9;
+    --text-dim:#98a2b3;
+    --gold:#f2b64c;
+    --gold-2:#de9a2c;
+    --gold-soft:#f7dfae;
+    --radius:18px;
+    --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    --font-serif:"Noto Serif SC","Songti SC","STSong","SimSun",Georgia,"Times New Roman",serif;
+}
+
+/* ============ 基础重置 ============ */
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:var(--font-sans);
+    font-size:16px;
+    line-height:1.9;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    background-color:var(--bg);
+    background-image:
+        linear-gradient(rgba(255,255,255,.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.016) 1px, transparent 1px),
+        radial-gradient(1100px 620px at 12% -12%, rgba(242,182,76,.10), transparent 62%),
+        radial-gradient(900px 520px at 92% 2%, rgba(108,140,255,.10), transparent 60%);
+    background-size:72px 72px, 72px 72px, auto, auto;
+    background-attachment:fixed;
+}
+
+p{ margin:0 0 16px; color:var(--text-soft); }
+p:last-child{ margin-bottom:0; }
+
+/* ============ 顶部导航 ============ */
+.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(12,14,19,.75);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+}
+.nav-inner{
+    max-width:900px; margin:0 auto;
+    padding:12px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap;
+}
+.brand{
+    font-family:var(--font-serif);
+    font-size:17px; font-weight:700;
+    letter-spacing:.1em;
+    color:var(--gold-soft);
+    text-decoration:none;
+}
+.nav-back{
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 18px;
+    font-size:14px;
+    color:var(--text-dim);
+    text-decoration:none;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:999px;
+    transition:all .25s ease;
+}
+.nav-back:hover{
+    color:#12141a;
+    background:linear-gradient(135deg,var(--gold),var(--gold-2));
+    border-color:transparent;
+    box-shadow:0 6px 18px -8px rgba(242,182,76,.9);
+}
+
+/* ============ 头图 ============ */
+.hero{
+    max-width:900px; margin:0 auto;
+    padding:76px 24px 52px;
+    text-align:center;
+}
+.eyebrow{
+    margin:0 0 20px;
+    font-size:12px; letter-spacing:.34em;
+    color:var(--gold); opacity:.9;
+}
+.hero h1{
+    margin:0 0 18px;
+    font-family:var(--font-serif);
+    font-size:clamp(27px,4.6vw,44px);
+    font-weight:700;
+    letter-spacing:.06em;
+    line-height:1.4;
+    background:linear-gradient(180deg,#ffffff 0%,#f6d79a 58%,#d59b34 100%);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:transparent;
+}
+.hero-sub{
+    margin:0;
+    font-size:clamp(13px,2vw,16px);
+    letter-spacing:.2em;
+    color:var(--text-dim);
+}
+
+/* ============ 分隔线 ============ */
+.rule{
+    max-width:852px; margin:0 auto;
+    height:1px; border:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);
+}
+
+/* ============ 内容区 ============ */
+main{ position:relative; z-index:1; }
+.section{
+    max-width:900px; margin:0 auto;
+    padding:48px 24px;
+}
+.section h2{
+    position:relative;
+    margin:0 0 22px;
+    padding-left:20px;
+    font-family:var(--font-serif);
+    font-size:clamp(19px,2.8vw,25px);
+    font-weight:700;
+    letter-spacing:.05em;
+    color:#f4f6fa;
+}
+.section h2::before{
+    content:"";
+    position:absolute; left:0; top:50%;
+    transform:translateY(-50%);
+    width:5px; height:1.05em;
+    border-radius:4px;
+    background:linear-gradient(180deg,var(--gold),var(--gold-2));
+    box-shadow:0 0 18px rgba(242,182,76,.6);
+}
+.section h3{
+    margin:0 0 18px;
+    font-size:16px;
+    font-weight:600;
+    letter-spacing:.14em;
+    color:var(--gold-soft);
+}
+
+/* ============ 卡片 ============ */
+.card{
+    padding:32px 36px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.018));
+    box-shadow:0 30px 70px -50px rgba(0,0,0,1);
+}
+.card + .card{ margin-top:22px; }
+
+/* ============ 活动基本信息列表 ============ */
+.info-list{
+    list-style:none;
+    margin:0; padding:0;
+    display:grid; gap:12px;
+}
+.info-list li{
+    display:flex; align-items:baseline; gap:16px;
+    padding:14px 18px;
+    border:1px solid var(--line-soft);
+    border-radius:13px;
+    background:rgba(255,255,255,.025);
+    color:var(--text-soft);
+    transition:border-color .25s ease, background .25s ease, transform .25s ease;
+}
+.info-list li:hover{
+    border-color:rgba(242,182,76,.45);
+    background:rgba(242,182,76,.07);
+    transform:translateX(3px);
+}
+.info-list .k{
+    flex:none; width:80px;
+    font-size:13px; letter-spacing:.14em;
+    color:var(--gold);
+}
+.info-list .v{
+    flex:1; min-width:0;
+    font-size:15px;
+    color:var(--text);
+}
+
+/* ============ 按钮 ============ */
+.btn-row{
+    display:flex; flex-wrap:wrap; gap:14px;
+    justify-content:center;
+}
+.btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:inherit;
+    font-size:15px; font-weight:600;
+    letter-spacing:.08em;
+    padding:12px 34px;
+    border-radius:12px;
+    text-decoration:none;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:all .25s ease;
+}
+.btn-primary{
+    color:#14161c;
+    background:linear-gradient(135deg,#f8cb72,var(--gold-2));
+    box-shadow:0 16px 34px -16px rgba(242,182,76,.95);
+}
+.btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 22px 40px -14px rgba(242,182,76,.9);
+}
+.btn-ghost{
+    color:var(--text-soft);
+    background:transparent;
+    border-color:rgba(255,255,255,.18);
+}
+.btn-ghost:hover{
+    color:#fff;
+    background:rgba(255,255,255,.06);
+    border-color:rgba(255,255,255,.4);
+}
+
+/* ============ 页脚 ============ */
+.site-footer{
+    margin-top:30px;
+    padding:46px 24px 60px;
+    text-align:center;
+    border-top:1px solid var(--line);
+    background:linear-gradient(180deg,transparent,rgba(242,182,76,.05));
+}
+.foot-title{
+    margin:0 0 10px;
+    font-family:var(--font-serif);
+    font-size:17px;
+    letter-spacing:.16em;
+    color:var(--gold-soft);
+}
+.foot-note{
+    margin:0;
+    font-size:12.5px;
+    letter-spacing:.22em;
+    color:rgba(152,162,179,.7);
+}
+
+/* ============ 响应式 ============ */
+@media (max-width:720px){
+    .nav-inner{ padding:10px 16px; justify-content:center; }
+    .brand{ width:100%; text-align:center; }
+    .hero{ padding:52px 18px 40px; }
+    .section{ padding:38px 18px; }
+    .card{ padding:24px 20px; }
+    .info-list li{ flex-direction:column; gap:4px; padding:13px 16px; }
+    .info-list .k{ width:auto; }
+    .btn{ width:100%; justify-content:center; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<nav class="site-nav">
+    <div class="nav-inner">
+        <a class="brand" href="meng-0238-work2.html">♪ 校园贝斯社</a>
+        <a class="nav-back" href="meng-0238-work2.html">← 返回招新网页</a>
+    </div>
+</nav>
+
+<!-- ===== 头图 ===== -->
+<header class="hero">
+    <p class="eyebrow">CAMPUS BASS CLUB · ACTIVITIES</p>
+    <h1>贝斯社活动简介</h1>
+    <p class="hero-sub">低音不低调 · 律动由你掌控</p>
+</header>
+
+<hr class="rule">
+
+<main>
+
+<!-- ===== 社团活动介绍 ===== -->
+<section class="section">
+    <h2>关于我们的日常</h2>
+
+    <div class="card">
+        <p>
+            这里是从“招新网页”点击图片后跳转到的简单介绍页面。
+        </p>
+        <p>
+            贝斯社定期开展乐器基础教学、乐队合奏排练、校园音乐节演出等活动。每周固定开放练习室，
+            为零基础同学提供贝斯入门公开课，也会组织乐队排练、作品赏析、即兴演奏沙龙，给大家提供登台展示的机会，欢迎热爱低音音乐的同学参与。
+        </p>
+    </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===== 活动基本信息 ===== -->
+<section class="section">
+    <h2>活动基本信息</h2>
+
+    <div class="card">
+        <h3>校园贝斯小型音乐会</h3>
+        <ul class="info-list">
+            <li><span class="k">活动名称</span><span class="v">校园贝斯小型音乐会</span></li>
+            <li><span class="k">活动时间</span><span class="v">2025 年 5 月</span></li>
+            <li><span class="k">活动地点</span><span class="v">学生活动中心 201</span></li>
+        </ul>
+
+        <p style="margin-top:22px;">
+            活动当天，几位社员轮流弹唱了自己最喜欢的歌曲，也有同学带来了原创作品，现场气氛轻松、愉快。
+        </p>
+    </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===== 返回链接 ===== -->
+<section class="section">
+    <div class="btn-row">
+        <!-- 这里的文件名改成你主页面的实际文件名，比如 club_example.html 或 club.html -->
+        <a class="btn btn-primary" href="meng-0238-work2.html">返回贝斯社招新网页</a>
+        <a class="btn btn-ghost" href="#top">↑ 回到本页顶部</a>
+    </div>
+</section>
+
+</main>
+
+<!-- ===== 页脚 ===== -->
+<footer class="site-footer">
+    <p class="foot-title">校园贝斯社 · 2026 招新</p>
+    <p class="foot-note">LOW END · HIGH VIBE</p>
+</footer>
+
+</body>
+</html>
