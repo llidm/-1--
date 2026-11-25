@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 32px 12px;
+            background-color: #FFECD6;
+            color: #3f342b;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .page {
+            display: inline-block;
+            background-color: #fefaf5;
+            box-shadow: 0 0 30px rgba(80, 58, 35, 0.25);
+            text-align: left;
+            max-width: 720px;
+        }
+
+        .page > div {
+            padding: 20px 32px;
+        }
+
+        .page > div + div {
+            border-top: 1px solid #ead9c7;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #754c24;
+            margin-top: 0;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+        }
+
+        p#intro {
+            padding: 10px 14px;
+            border-left: 5px solid #c2573d;
+            background-color: #fff0e4;
+            color: #a23b2a;
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            background-color: #ffffff;
+        }
+
+        th, td {
+            padding: 9px 10px;
+            border: 1px solid #cdbba7;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f3d3ae;
+            color: #5c3a1d;
+        }
+
+        div table a {
+            color: #9a4f16;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        a:link {
+            color: #276fbf;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #75539b;
+        }
+
+        a:hover {
+            color: #b43b2d;
+            background-color: #ffe0b2;
+            text-decoration: underline;
+        }
+
+        a:active {
+            color: #ffffff;
+            background-color: #b43b2d;
+        }
+
+        a.red {
+            color: #c23b3b;
+            font-weight: bold;
+        }
+
+        a.blue {
+            color: #276fbf;
+            font-weight: bold;
+        }
+
+        p::first-letter {
+            color: #b4642c;
+            font-size: 1.35em;
+            font-weight: bold;
+        }
+
+        div::first-line {
+            letter-spacing: 0.04em;
+        }
+
+        .notice {
+            background-color: #fff1df;
+        }
+
+        .notice p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- ① 顶部标题区 -->
+        <div>
+            <h1>影像与文学讨论夜 · Film &amp; Literature Talk</h1>
+        </div>
+
+        <!-- ② 活动介绍区 -->
+        <div>
+            <h2 id="intro">活动介绍</h2>
+            <p>当文字被镜头重新讲述，故事会呈现出怎样的新面貌？本次活动邀请热爱阅读与电影的同学，在轻松的夜晚分享观点，比较小说与电影在人物、节奏和情感表达上的不同。</p>
+            <p>我们将从《The Little Prince》的童真与哲思出发，也会讨论《千与千寻》中关于成长、勇气与选择的片段。无需专业背景，只要带来一部你喜欢的作品和一个愿意交流的问题。</p>
+            <p id="intro">重要提示：请提前准备一段不超过三分钟的发言，并在活动开始前十五分钟签到入场。</p>
+        </div>
+
+        <!-- ③ 活动报名信息表格区 -->
+        <div>
+            <h3>活动安排与报名信息</h3>
+            <table>
+                <tr>
+                    <th>时间</th>
+                    <th>活动环节</th>
+                    <th>讨论主题</th>
+                    <th>带领人</th>
+                </tr>
+                <tr>
+                    <td>18:40—19:00</td>
+                    <td>入场签到</td>
+                    <td>领取号码牌与交流卡</td>
+                    <td>志愿者组</td>
+                </tr>
+                <tr>
+                    <td>19:00—19:20</td>
+                    <td>文学共读</td>
+                    <td>《The Little Prince》中的驯养与责任</td>
+                    <td>林同学</td>
+                </tr>
+                <tr>
+                    <td>19:20—19:45</td>
+                    <td>影像赏析</td>
+                    <td><a href="https://movie.douban.com/subject/1291561/">《千与千寻》</a>的成长隐喻</td>
+                    <td>周同学</td>
+                </tr>
+                <tr>
+                    <td>19:45—20:10</td>
+                    <td>圆桌讨论</td>
+                    <td>小说叙事与电影镜头有何不同</td>
+                    <td>全体参与者</td>
+                </tr>
+                <tr>
+                    <td>20:10—20:35</td>
+                    <td>自由分享</td>
+                    <td>我最想推荐的一次文学改编</td>
+                    <td>现场报名者</td>
+                </tr>
+                <tr>
+                    <td>20:35—20:50</td>
+                    <td>总结与合影</td>
+                    <td>征集下一期活动主题</td>
+                    <td>活动组委会</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ④ 页面链接区 -->
+        <div>
+            <div>
+                <a class="red" href="https://hongchenwusdnu.github.io/bookstore/job4.html">查看往期活动照片</a>
+                <br>
+                <a class="blue" href="meng-0238-work3.html">在线咨询活动详情</a>
+            </div>
+        </div>
+
+        <!-- ⑤ 底部公告区 -->
+        <div class="notice">
+            <p>公告一：本次活动免费，座位有限，报名成功后请准时参加。<br>如无法到场，请至少提前一天取消报名。</p>
+            <p>公告二：讨论时请尊重不同观点，不剧透他人尚未阅读或观看的关键情节。<br>拍照前请先征得在场同学同意。</p>
+            <p>公告三：活动地点为图书馆二楼交流室。<br>活动结束后，欢迎带走自己的物品并协助整理桌椅。</p>
+        </div>
+    </div>
+</body>
+</html>
